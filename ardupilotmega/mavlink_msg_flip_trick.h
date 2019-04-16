@@ -5,7 +5,7 @@
 
 MAVPACKED(
 typedef struct __mavlink_flip_trick_t {
- float count; /*< [m] flip count.*/
+ float value; /*< [degree] flip value.*/
  uint8_t tpye; /*<  0 for canle.*/
 }) mavlink_flip_trick_t;
 
@@ -14,8 +14,8 @@ typedef struct __mavlink_flip_trick_t {
 #define MAVLINK_MSG_ID_11067_LEN 5
 #define MAVLINK_MSG_ID_11067_MIN_LEN 5
 
-#define MAVLINK_MSG_ID_FLIP_TRICK_CRC 189
-#define MAVLINK_MSG_ID_11067_CRC 189
+#define MAVLINK_MSG_ID_FLIP_TRICK_CRC 167
+#define MAVLINK_MSG_ID_11067_CRC 167
 
 
 
@@ -25,7 +25,7 @@ typedef struct __mavlink_flip_trick_t {
     "FLIP_TRICK", \
     2, \
     {  { "tpye", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_flip_trick_t, tpye) }, \
-         { "count", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_flip_trick_t, count) }, \
+         { "value", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_flip_trick_t, value) }, \
          } \
 }
 #else
@@ -33,7 +33,7 @@ typedef struct __mavlink_flip_trick_t {
     "FLIP_TRICK", \
     2, \
     {  { "tpye", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_flip_trick_t, tpye) }, \
-         { "count", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_flip_trick_t, count) }, \
+         { "value", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_flip_trick_t, value) }, \
          } \
 }
 #endif
@@ -45,21 +45,21 @@ typedef struct __mavlink_flip_trick_t {
  * @param msg The MAVLink message to compress the data into
  *
  * @param tpye  0 for canle.
- * @param count [m] flip count.
+ * @param value [degree] flip value.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_flip_trick_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint8_t tpye, float count)
+                               uint8_t tpye, float value)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_FLIP_TRICK_LEN];
-    _mav_put_float(buf, 0, count);
+    _mav_put_float(buf, 0, value);
     _mav_put_uint8_t(buf, 4, tpye);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FLIP_TRICK_LEN);
 #else
     mavlink_flip_trick_t packet;
-    packet.count = count;
+    packet.value = value;
     packet.tpye = tpye;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_FLIP_TRICK_LEN);
@@ -76,22 +76,22 @@ static inline uint16_t mavlink_msg_flip_trick_pack(uint8_t system_id, uint8_t co
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
  * @param tpye  0 for canle.
- * @param count [m] flip count.
+ * @param value [degree] flip value.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_flip_trick_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint8_t tpye,float count)
+                                   uint8_t tpye,float value)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_FLIP_TRICK_LEN];
-    _mav_put_float(buf, 0, count);
+    _mav_put_float(buf, 0, value);
     _mav_put_uint8_t(buf, 4, tpye);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FLIP_TRICK_LEN);
 #else
     mavlink_flip_trick_t packet;
-    packet.count = count;
+    packet.value = value;
     packet.tpye = tpye;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_FLIP_TRICK_LEN);
@@ -111,7 +111,7 @@ static inline uint16_t mavlink_msg_flip_trick_pack_chan(uint8_t system_id, uint8
  */
 static inline uint16_t mavlink_msg_flip_trick_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_flip_trick_t* flip_trick)
 {
-    return mavlink_msg_flip_trick_pack(system_id, component_id, msg, flip_trick->tpye, flip_trick->count);
+    return mavlink_msg_flip_trick_pack(system_id, component_id, msg, flip_trick->tpye, flip_trick->value);
 }
 
 /**
@@ -125,7 +125,7 @@ static inline uint16_t mavlink_msg_flip_trick_encode(uint8_t system_id, uint8_t 
  */
 static inline uint16_t mavlink_msg_flip_trick_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_flip_trick_t* flip_trick)
 {
-    return mavlink_msg_flip_trick_pack_chan(system_id, component_id, chan, msg, flip_trick->tpye, flip_trick->count);
+    return mavlink_msg_flip_trick_pack_chan(system_id, component_id, chan, msg, flip_trick->tpye, flip_trick->value);
 }
 
 /**
@@ -133,21 +133,21 @@ static inline uint16_t mavlink_msg_flip_trick_encode_chan(uint8_t system_id, uin
  * @param chan MAVLink channel to send the message
  *
  * @param tpye  0 for canle.
- * @param count [m] flip count.
+ * @param value [degree] flip value.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_flip_trick_send(mavlink_channel_t chan, uint8_t tpye, float count)
+static inline void mavlink_msg_flip_trick_send(mavlink_channel_t chan, uint8_t tpye, float value)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_FLIP_TRICK_LEN];
-    _mav_put_float(buf, 0, count);
+    _mav_put_float(buf, 0, value);
     _mav_put_uint8_t(buf, 4, tpye);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FLIP_TRICK, buf, MAVLINK_MSG_ID_FLIP_TRICK_MIN_LEN, MAVLINK_MSG_ID_FLIP_TRICK_LEN, MAVLINK_MSG_ID_FLIP_TRICK_CRC);
 #else
     mavlink_flip_trick_t packet;
-    packet.count = count;
+    packet.value = value;
     packet.tpye = tpye;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FLIP_TRICK, (const char *)&packet, MAVLINK_MSG_ID_FLIP_TRICK_MIN_LEN, MAVLINK_MSG_ID_FLIP_TRICK_LEN, MAVLINK_MSG_ID_FLIP_TRICK_CRC);
@@ -162,7 +162,7 @@ static inline void mavlink_msg_flip_trick_send(mavlink_channel_t chan, uint8_t t
 static inline void mavlink_msg_flip_trick_send_struct(mavlink_channel_t chan, const mavlink_flip_trick_t* flip_trick)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_flip_trick_send(chan, flip_trick->tpye, flip_trick->count);
+    mavlink_msg_flip_trick_send(chan, flip_trick->tpye, flip_trick->value);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FLIP_TRICK, (const char *)flip_trick, MAVLINK_MSG_ID_FLIP_TRICK_MIN_LEN, MAVLINK_MSG_ID_FLIP_TRICK_LEN, MAVLINK_MSG_ID_FLIP_TRICK_CRC);
 #endif
@@ -176,17 +176,17 @@ static inline void mavlink_msg_flip_trick_send_struct(mavlink_channel_t chan, co
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_flip_trick_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t tpye, float count)
+static inline void mavlink_msg_flip_trick_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t tpye, float value)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
-    _mav_put_float(buf, 0, count);
+    _mav_put_float(buf, 0, value);
     _mav_put_uint8_t(buf, 4, tpye);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FLIP_TRICK, buf, MAVLINK_MSG_ID_FLIP_TRICK_MIN_LEN, MAVLINK_MSG_ID_FLIP_TRICK_LEN, MAVLINK_MSG_ID_FLIP_TRICK_CRC);
 #else
     mavlink_flip_trick_t *packet = (mavlink_flip_trick_t *)msgbuf;
-    packet->count = count;
+    packet->value = value;
     packet->tpye = tpye;
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_FLIP_TRICK, (const char *)packet, MAVLINK_MSG_ID_FLIP_TRICK_MIN_LEN, MAVLINK_MSG_ID_FLIP_TRICK_LEN, MAVLINK_MSG_ID_FLIP_TRICK_CRC);
@@ -210,11 +210,11 @@ static inline uint8_t mavlink_msg_flip_trick_get_tpye(const mavlink_message_t* m
 }
 
 /**
- * @brief Get field count from flip_trick message
+ * @brief Get field value from flip_trick message
  *
- * @return [m] flip count.
+ * @return [degree] flip value.
  */
-static inline float mavlink_msg_flip_trick_get_count(const mavlink_message_t* msg)
+static inline float mavlink_msg_flip_trick_get_value(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_float(msg,  0);
 }
@@ -228,7 +228,7 @@ static inline float mavlink_msg_flip_trick_get_count(const mavlink_message_t* ms
 static inline void mavlink_msg_flip_trick_decode(const mavlink_message_t* msg, mavlink_flip_trick_t* flip_trick)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    flip_trick->count = mavlink_msg_flip_trick_get_count(msg);
+    flip_trick->value = mavlink_msg_flip_trick_get_value(msg);
     flip_trick->tpye = mavlink_msg_flip_trick_get_tpye(msg);
 #else
         uint8_t len = msg->len < MAVLINK_MSG_ID_FLIP_TRICK_LEN? msg->len : MAVLINK_MSG_ID_FLIP_TRICK_LEN;

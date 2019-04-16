@@ -3711,7 +3711,7 @@ static void mavlink_test_flip_trick(uint8_t system_id, uint8_t component_id, mav
     };
     mavlink_flip_trick_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        packet1.count = packet_in.count;
+        packet1.value = packet_in.value;
         packet1.tpye = packet_in.tpye;
         
         
@@ -3727,12 +3727,12 @@ static void mavlink_test_flip_trick(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_flip_trick_pack(system_id, component_id, &msg , packet1.tpye , packet1.count );
+    mavlink_msg_flip_trick_pack(system_id, component_id, &msg , packet1.tpye , packet1.value );
     mavlink_msg_flip_trick_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_flip_trick_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.tpye , packet1.count );
+    mavlink_msg_flip_trick_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.tpye , packet1.value );
     mavlink_msg_flip_trick_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -3745,7 +3745,7 @@ static void mavlink_test_flip_trick(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_flip_trick_send(MAVLINK_COMM_1 , packet1.tpye , packet1.count );
+    mavlink_msg_flip_trick_send(MAVLINK_COMM_1 , packet1.tpye , packet1.value );
     mavlink_msg_flip_trick_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
