@@ -5,9 +5,9 @@
 
 MAVPACKED(
 typedef struct __mavlink_lab_depth_pid_t {
- float p; /*<  0 for not change.*/
- float i; /*<  0 for not change.*/
- float d; /*<  0 for not change.*/
+ float kp; /*<  0 for not change.*/
+ float ki; /*<  0 for not change.*/
+ float kd; /*<  0 for not change.*/
  float imax; /*<  0 for not change.*/
  float filt_hz; /*<  0 for not change.*/
  float ff; /*<  0 for not change.*/
@@ -19,8 +19,8 @@ typedef struct __mavlink_lab_depth_pid_t {
 #define MAVLINK_MSG_ID_11068_LEN 25
 #define MAVLINK_MSG_ID_11068_MIN_LEN 25
 
-#define MAVLINK_MSG_ID_LAB_DEPTH_PID_CRC 93
-#define MAVLINK_MSG_ID_11068_CRC 93
+#define MAVLINK_MSG_ID_LAB_DEPTH_PID_CRC 68
+#define MAVLINK_MSG_ID_11068_CRC 68
 
 
 
@@ -30,9 +30,9 @@ typedef struct __mavlink_lab_depth_pid_t {
     "LAB_DEPTH_PID", \
     7, \
     {  { "save", NULL, MAVLINK_TYPE_UINT8_T, 0, 24, offsetof(mavlink_lab_depth_pid_t, save) }, \
-         { "p", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_lab_depth_pid_t, p) }, \
-         { "i", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_lab_depth_pid_t, i) }, \
-         { "d", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_lab_depth_pid_t, d) }, \
+         { "kp", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_lab_depth_pid_t, kp) }, \
+         { "ki", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_lab_depth_pid_t, ki) }, \
+         { "kd", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_lab_depth_pid_t, kd) }, \
          { "imax", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_lab_depth_pid_t, imax) }, \
          { "filt_hz", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_lab_depth_pid_t, filt_hz) }, \
          { "ff", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_lab_depth_pid_t, ff) }, \
@@ -43,9 +43,9 @@ typedef struct __mavlink_lab_depth_pid_t {
     "LAB_DEPTH_PID", \
     7, \
     {  { "save", NULL, MAVLINK_TYPE_UINT8_T, 0, 24, offsetof(mavlink_lab_depth_pid_t, save) }, \
-         { "p", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_lab_depth_pid_t, p) }, \
-         { "i", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_lab_depth_pid_t, i) }, \
-         { "d", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_lab_depth_pid_t, d) }, \
+         { "kp", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_lab_depth_pid_t, kp) }, \
+         { "ki", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_lab_depth_pid_t, ki) }, \
+         { "kd", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_lab_depth_pid_t, kd) }, \
          { "imax", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_lab_depth_pid_t, imax) }, \
          { "filt_hz", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_lab_depth_pid_t, filt_hz) }, \
          { "ff", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_lab_depth_pid_t, ff) }, \
@@ -60,22 +60,22 @@ typedef struct __mavlink_lab_depth_pid_t {
  * @param msg The MAVLink message to compress the data into
  *
  * @param save  1 for save value to EEPROM.
- * @param p  0 for not change.
- * @param i  0 for not change.
- * @param d  0 for not change.
+ * @param kp  0 for not change.
+ * @param ki  0 for not change.
+ * @param kd  0 for not change.
  * @param imax  0 for not change.
  * @param filt_hz  0 for not change.
  * @param ff  0 for not change.
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_lab_depth_pid_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint8_t save, float p, float i, float d, float imax, float filt_hz, float ff)
+                               uint8_t save, float kp, float ki, float kd, float imax, float filt_hz, float ff)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN];
-    _mav_put_float(buf, 0, p);
-    _mav_put_float(buf, 4, i);
-    _mav_put_float(buf, 8, d);
+    _mav_put_float(buf, 0, kp);
+    _mav_put_float(buf, 4, ki);
+    _mav_put_float(buf, 8, kd);
     _mav_put_float(buf, 12, imax);
     _mav_put_float(buf, 16, filt_hz);
     _mav_put_float(buf, 20, ff);
@@ -84,9 +84,9 @@ static inline uint16_t mavlink_msg_lab_depth_pid_pack(uint8_t system_id, uint8_t
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN);
 #else
     mavlink_lab_depth_pid_t packet;
-    packet.p = p;
-    packet.i = i;
-    packet.d = d;
+    packet.kp = kp;
+    packet.ki = ki;
+    packet.kd = kd;
     packet.imax = imax;
     packet.filt_hz = filt_hz;
     packet.ff = ff;
@@ -106,9 +106,9 @@ static inline uint16_t mavlink_msg_lab_depth_pid_pack(uint8_t system_id, uint8_t
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
  * @param save  1 for save value to EEPROM.
- * @param p  0 for not change.
- * @param i  0 for not change.
- * @param d  0 for not change.
+ * @param kp  0 for not change.
+ * @param ki  0 for not change.
+ * @param kd  0 for not change.
  * @param imax  0 for not change.
  * @param filt_hz  0 for not change.
  * @param ff  0 for not change.
@@ -116,13 +116,13 @@ static inline uint16_t mavlink_msg_lab_depth_pid_pack(uint8_t system_id, uint8_t
  */
 static inline uint16_t mavlink_msg_lab_depth_pid_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint8_t save,float p,float i,float d,float imax,float filt_hz,float ff)
+                                   uint8_t save,float kp,float ki,float kd,float imax,float filt_hz,float ff)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN];
-    _mav_put_float(buf, 0, p);
-    _mav_put_float(buf, 4, i);
-    _mav_put_float(buf, 8, d);
+    _mav_put_float(buf, 0, kp);
+    _mav_put_float(buf, 4, ki);
+    _mav_put_float(buf, 8, kd);
     _mav_put_float(buf, 12, imax);
     _mav_put_float(buf, 16, filt_hz);
     _mav_put_float(buf, 20, ff);
@@ -131,9 +131,9 @@ static inline uint16_t mavlink_msg_lab_depth_pid_pack_chan(uint8_t system_id, ui
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN);
 #else
     mavlink_lab_depth_pid_t packet;
-    packet.p = p;
-    packet.i = i;
-    packet.d = d;
+    packet.kp = kp;
+    packet.ki = ki;
+    packet.kd = kd;
     packet.imax = imax;
     packet.filt_hz = filt_hz;
     packet.ff = ff;
@@ -156,7 +156,7 @@ static inline uint16_t mavlink_msg_lab_depth_pid_pack_chan(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_lab_depth_pid_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_lab_depth_pid_t* lab_depth_pid)
 {
-    return mavlink_msg_lab_depth_pid_pack(system_id, component_id, msg, lab_depth_pid->save, lab_depth_pid->p, lab_depth_pid->i, lab_depth_pid->d, lab_depth_pid->imax, lab_depth_pid->filt_hz, lab_depth_pid->ff);
+    return mavlink_msg_lab_depth_pid_pack(system_id, component_id, msg, lab_depth_pid->save, lab_depth_pid->kp, lab_depth_pid->ki, lab_depth_pid->kd, lab_depth_pid->imax, lab_depth_pid->filt_hz, lab_depth_pid->ff);
 }
 
 /**
@@ -170,7 +170,7 @@ static inline uint16_t mavlink_msg_lab_depth_pid_encode(uint8_t system_id, uint8
  */
 static inline uint16_t mavlink_msg_lab_depth_pid_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_lab_depth_pid_t* lab_depth_pid)
 {
-    return mavlink_msg_lab_depth_pid_pack_chan(system_id, component_id, chan, msg, lab_depth_pid->save, lab_depth_pid->p, lab_depth_pid->i, lab_depth_pid->d, lab_depth_pid->imax, lab_depth_pid->filt_hz, lab_depth_pid->ff);
+    return mavlink_msg_lab_depth_pid_pack_chan(system_id, component_id, chan, msg, lab_depth_pid->save, lab_depth_pid->kp, lab_depth_pid->ki, lab_depth_pid->kd, lab_depth_pid->imax, lab_depth_pid->filt_hz, lab_depth_pid->ff);
 }
 
 /**
@@ -178,22 +178,22 @@ static inline uint16_t mavlink_msg_lab_depth_pid_encode_chan(uint8_t system_id, 
  * @param chan MAVLink channel to send the message
  *
  * @param save  1 for save value to EEPROM.
- * @param p  0 for not change.
- * @param i  0 for not change.
- * @param d  0 for not change.
+ * @param kp  0 for not change.
+ * @param ki  0 for not change.
+ * @param kd  0 for not change.
  * @param imax  0 for not change.
  * @param filt_hz  0 for not change.
  * @param ff  0 for not change.
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_lab_depth_pid_send(mavlink_channel_t chan, uint8_t save, float p, float i, float d, float imax, float filt_hz, float ff)
+static inline void mavlink_msg_lab_depth_pid_send(mavlink_channel_t chan, uint8_t save, float kp, float ki, float kd, float imax, float filt_hz, float ff)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN];
-    _mav_put_float(buf, 0, p);
-    _mav_put_float(buf, 4, i);
-    _mav_put_float(buf, 8, d);
+    _mav_put_float(buf, 0, kp);
+    _mav_put_float(buf, 4, ki);
+    _mav_put_float(buf, 8, kd);
     _mav_put_float(buf, 12, imax);
     _mav_put_float(buf, 16, filt_hz);
     _mav_put_float(buf, 20, ff);
@@ -202,9 +202,9 @@ static inline void mavlink_msg_lab_depth_pid_send(mavlink_channel_t chan, uint8_
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_LAB_DEPTH_PID, buf, MAVLINK_MSG_ID_LAB_DEPTH_PID_MIN_LEN, MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN, MAVLINK_MSG_ID_LAB_DEPTH_PID_CRC);
 #else
     mavlink_lab_depth_pid_t packet;
-    packet.p = p;
-    packet.i = i;
-    packet.d = d;
+    packet.kp = kp;
+    packet.ki = ki;
+    packet.kd = kd;
     packet.imax = imax;
     packet.filt_hz = filt_hz;
     packet.ff = ff;
@@ -222,7 +222,7 @@ static inline void mavlink_msg_lab_depth_pid_send(mavlink_channel_t chan, uint8_
 static inline void mavlink_msg_lab_depth_pid_send_struct(mavlink_channel_t chan, const mavlink_lab_depth_pid_t* lab_depth_pid)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_lab_depth_pid_send(chan, lab_depth_pid->save, lab_depth_pid->p, lab_depth_pid->i, lab_depth_pid->d, lab_depth_pid->imax, lab_depth_pid->filt_hz, lab_depth_pid->ff);
+    mavlink_msg_lab_depth_pid_send(chan, lab_depth_pid->save, lab_depth_pid->kp, lab_depth_pid->ki, lab_depth_pid->kd, lab_depth_pid->imax, lab_depth_pid->filt_hz, lab_depth_pid->ff);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_LAB_DEPTH_PID, (const char *)lab_depth_pid, MAVLINK_MSG_ID_LAB_DEPTH_PID_MIN_LEN, MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN, MAVLINK_MSG_ID_LAB_DEPTH_PID_CRC);
 #endif
@@ -236,13 +236,13 @@ static inline void mavlink_msg_lab_depth_pid_send_struct(mavlink_channel_t chan,
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_lab_depth_pid_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t save, float p, float i, float d, float imax, float filt_hz, float ff)
+static inline void mavlink_msg_lab_depth_pid_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t save, float kp, float ki, float kd, float imax, float filt_hz, float ff)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
-    _mav_put_float(buf, 0, p);
-    _mav_put_float(buf, 4, i);
-    _mav_put_float(buf, 8, d);
+    _mav_put_float(buf, 0, kp);
+    _mav_put_float(buf, 4, ki);
+    _mav_put_float(buf, 8, kd);
     _mav_put_float(buf, 12, imax);
     _mav_put_float(buf, 16, filt_hz);
     _mav_put_float(buf, 20, ff);
@@ -251,9 +251,9 @@ static inline void mavlink_msg_lab_depth_pid_send_buf(mavlink_message_t *msgbuf,
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_LAB_DEPTH_PID, buf, MAVLINK_MSG_ID_LAB_DEPTH_PID_MIN_LEN, MAVLINK_MSG_ID_LAB_DEPTH_PID_LEN, MAVLINK_MSG_ID_LAB_DEPTH_PID_CRC);
 #else
     mavlink_lab_depth_pid_t *packet = (mavlink_lab_depth_pid_t *)msgbuf;
-    packet->p = p;
-    packet->i = i;
-    packet->d = d;
+    packet->kp = kp;
+    packet->ki = ki;
+    packet->kd = kd;
     packet->imax = imax;
     packet->filt_hz = filt_hz;
     packet->ff = ff;
@@ -280,31 +280,31 @@ static inline uint8_t mavlink_msg_lab_depth_pid_get_save(const mavlink_message_t
 }
 
 /**
- * @brief Get field p from lab_depth_pid message
+ * @brief Get field kp from lab_depth_pid message
  *
  * @return  0 for not change.
  */
-static inline float mavlink_msg_lab_depth_pid_get_p(const mavlink_message_t* msg)
+static inline float mavlink_msg_lab_depth_pid_get_kp(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_float(msg,  0);
 }
 
 /**
- * @brief Get field i from lab_depth_pid message
+ * @brief Get field ki from lab_depth_pid message
  *
  * @return  0 for not change.
  */
-static inline float mavlink_msg_lab_depth_pid_get_i(const mavlink_message_t* msg)
+static inline float mavlink_msg_lab_depth_pid_get_ki(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_float(msg,  4);
 }
 
 /**
- * @brief Get field d from lab_depth_pid message
+ * @brief Get field kd from lab_depth_pid message
  *
  * @return  0 for not change.
  */
-static inline float mavlink_msg_lab_depth_pid_get_d(const mavlink_message_t* msg)
+static inline float mavlink_msg_lab_depth_pid_get_kd(const mavlink_message_t* msg)
 {
     return _MAV_RETURN_float(msg,  8);
 }
@@ -348,9 +348,9 @@ static inline float mavlink_msg_lab_depth_pid_get_ff(const mavlink_message_t* ms
 static inline void mavlink_msg_lab_depth_pid_decode(const mavlink_message_t* msg, mavlink_lab_depth_pid_t* lab_depth_pid)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    lab_depth_pid->p = mavlink_msg_lab_depth_pid_get_p(msg);
-    lab_depth_pid->i = mavlink_msg_lab_depth_pid_get_i(msg);
-    lab_depth_pid->d = mavlink_msg_lab_depth_pid_get_d(msg);
+    lab_depth_pid->kp = mavlink_msg_lab_depth_pid_get_kp(msg);
+    lab_depth_pid->ki = mavlink_msg_lab_depth_pid_get_ki(msg);
+    lab_depth_pid->kd = mavlink_msg_lab_depth_pid_get_kd(msg);
     lab_depth_pid->imax = mavlink_msg_lab_depth_pid_get_imax(msg);
     lab_depth_pid->filt_hz = mavlink_msg_lab_depth_pid_get_filt_hz(msg);
     lab_depth_pid->ff = mavlink_msg_lab_depth_pid_get_ff(msg);

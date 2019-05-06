@@ -1623,9 +1623,9 @@
     <message id="11068" name="LAB_DEPTH_PID">
       <description>Lab depth PID.</description>
       <field type="uint8_t" name="save">1 for save value to EEPROM.</field>
-      <field type="float" name="p">0 for not change.</field>
-      <field type="float" name="i">0 for not change.</field>
-      <field type="float" name="d">0 for not change.</field>
+      <field type="float" name="kp">0 for not change.</field>
+      <field type="float" name="ki">0 for not change.</field>
+      <field type="float" name="kd">0 for not change.</field>
       <field type="float" name="imax">0 for not change.</field>
       <field type="float" name="filt_hz">0 for not change.</field>
       <field type="float" name="ff">0 for not change.</field>

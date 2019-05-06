@@ -3766,9 +3766,9 @@ static void mavlink_test_lab_depth_pid(uint8_t system_id, uint8_t component_id, 
     };
     mavlink_lab_depth_pid_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        packet1.p = packet_in.p;
-        packet1.i = packet_in.i;
-        packet1.d = packet_in.d;
+        packet1.kp = packet_in.kp;
+        packet1.ki = packet_in.ki;
+        packet1.kd = packet_in.kd;
         packet1.imax = packet_in.imax;
         packet1.filt_hz = packet_in.filt_hz;
         packet1.ff = packet_in.ff;
@@ -3787,12 +3787,12 @@ static void mavlink_test_lab_depth_pid(uint8_t system_id, uint8_t component_id, 
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_lab_depth_pid_pack(system_id, component_id, &msg , packet1.save , packet1.p , packet1.i , packet1.d , packet1.imax , packet1.filt_hz , packet1.ff );
+    mavlink_msg_lab_depth_pid_pack(system_id, component_id, &msg , packet1.save , packet1.kp , packet1.ki , packet1.kd , packet1.imax , packet1.filt_hz , packet1.ff );
     mavlink_msg_lab_depth_pid_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_lab_depth_pid_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.save , packet1.p , packet1.i , packet1.d , packet1.imax , packet1.filt_hz , packet1.ff );
+    mavlink_msg_lab_depth_pid_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.save , packet1.kp , packet1.ki , packet1.kd , packet1.imax , packet1.filt_hz , packet1.ff );
     mavlink_msg_lab_depth_pid_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -3805,7 +3805,7 @@ static void mavlink_test_lab_depth_pid(uint8_t system_id, uint8_t component_id, 
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-    mavlink_msg_lab_depth_pid_send(MAVLINK_COMM_1 , packet1.save , packet1.p , packet1.i , packet1.d , packet1.imax , packet1.filt_hz , packet1.ff );
+    mavlink_msg_lab_depth_pid_send(MAVLINK_COMM_1 , packet1.save , packet1.kp , packet1.ki , packet1.kd , packet1.imax , packet1.filt_hz , packet1.ff );
     mavlink_msg_lab_depth_pid_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
